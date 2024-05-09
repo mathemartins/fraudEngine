@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	db "github.com/techschool/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/token"
+	db "github.com/mathemartins/fraudEngine/db/sqlc"
+	"github.com/mathemartins/fraudEngine/token"
 )
 
 type createAccountRequest struct {

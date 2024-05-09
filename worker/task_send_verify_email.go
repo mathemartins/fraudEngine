@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/hibiken/asynq"
+	db "github.com/mathemartins/fraudEngine/db/sqlc"
+	"github.com/mathemartins/fraudEngine/util"
 	"github.com/rs/zerolog/log"
-	db "github.com/techschool/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/util"
 )
 
 const TaskSendVerifyEmail = "task:send_verify_email"

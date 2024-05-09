@@ -1,19 +1,20 @@
-DB_URL=postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable
+DB_URL=postgresql://root:pass=123@localhost:5432/fraudEngine?sslmode=disable
+name=init_schema
 
 network:
-	docker network create bank-network
+	docker network create karrabo-network
 
 postgres:
-	docker run --name postgres --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:14-alpine
+	docker run --name postgres --network karrabo-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=pass=123 -d postgres:14-alpine
 
 mysql:
 	docker run --name mysql8 -p 3306:3306  -e MYSQL_ROOT_PASSWORD=secret -d mysql:8
 
 createdb:
-	docker exec -it postgres createdb --username=root --owner=root simple_bank
+	docker exec -it postgres createdb --username=root --owner=root fraudEngine
 
 dropdb:
-	docker exec -it postgres dropdb simple_bank
+	docker exec -it postgres dropdb fraudEngine
 
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
@@ -46,8 +47,8 @@ server:
 	go run main.go
 
 mock:
-	mockgen -package mockdb -destination db/mock/store.go github.com/techschool/simplebank/db/sqlc Store
-	mockgen -package mockwk -destination worker/mock/distributor.go github.com/techschool/simplebank/worker TaskDistributor
+	mockgen -package mockdb -destination db/mock/store.go github.com/mathemartins/fraudEngine/db/sqlc Store
+	mockgen -package mockwk -destination worker/mock/distributor.go github.com/mathemartins/fraudEngine/worker TaskDistributor
 
 proto:
 	rm -f pb/*.go
@@ -55,7 +56,7 @@ proto:
 	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
 	--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
 	--grpc-gateway_out=pb --grpc-gateway_opt=paths=source_relative \
-	--openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=simple_bank \
+	--openapiv2_out=doc/swagger --openapiv2_opt=allow_merge=true,merge_file_name=fraud_engine \
 	proto/*.proto
 	statik -src=./doc/swagger -dest=./doc
 

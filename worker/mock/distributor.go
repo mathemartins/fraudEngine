@@ -8,7 +8,7 @@ import (
 	context "context"
 	gomock "github.com/golang/mock/gomock"
 	asynq "github.com/hibiken/asynq"
-	worker "github.com/techschool/simplebank/worker"
+	worker "github.com/mathemartins/fraudEngine/worker"
 	reflect "reflect"
 )
 

@@ -1,4 +1,4 @@
-module github.com/techschool/simplebank
+module github.com/mathemartins/fraudEngine
 
 go 1.22
 

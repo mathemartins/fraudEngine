@@ -7,12 +7,12 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/jackc/pgx/v5/pgtype"
+	mockdb "github.com/mathemartins/fraudEngine/db/mock"
+	db "github.com/mathemartins/fraudEngine/db/sqlc"
+	"github.com/mathemartins/fraudEngine/pb"
+	"github.com/mathemartins/fraudEngine/token"
+	"github.com/mathemartins/fraudEngine/util"
 	"github.com/stretchr/testify/require"
-	mockdb "github.com/techschool/simplebank/db/mock"
-	db "github.com/techschool/simplebank/db/sqlc"
-	"github.com/techschool/simplebank/pb"
-	"github.com/techschool/simplebank/token"
-	"github.com/techschool/simplebank/util"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

@@ -1,42 +1,39 @@
-CREATE TABLE "accounts" (
-  "id" bigserial PRIMARY KEY,
-  "owner" varchar NOT NULL,
-  "balance" bigint NOT NULL,
-  "currency" varchar NOT NULL,
-  "created_at" timestamptz NOT NULL DEFAULT (now())
+CREATE TABLE "user_watches" (
+    "id" bigserial PRIMARY KEY,
+    "user_id" UUID NOT NULL PRIMARY KEY,
+    "watch_reason" TEXT NOT NULL,
+    "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
 );
 
-CREATE TABLE "entries" (
+CREATE TABLE "fraud_alerts" (
+    "id" bigserial PRIMARY KEY,
+    "alert_id" SERIAL PRIMARY KEY,
+    "user_id" UUID NOT NULL,
+    "alert_reason" TEXT NOT NULL,
+    "alert_level" INT CHECK (alert_level BETWEEN 1 AND 5),
+    "slug"  VARCHAR(255) NOT NULL,
+    "created_at" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user_watches (user_id)
+);
+
+CREATE TABLE "transactions" (
   "id" bigserial PRIMARY KEY,
-  "account_id" bigint NOT NULL,
+  "from_user" bigint NOT NULL,
+  "to_user" bigint NOT NULL,
   "amount" bigint NOT NULL,
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
-CREATE TABLE "transfers" (
-  "id" bigserial PRIMARY KEY,
-  "from_account_id" bigint NOT NULL,
-  "to_account_id" bigint NOT NULL,
-  "amount" bigint NOT NULL,
-  "created_at" timestamptz NOT NULL DEFAULT (now())
-);
+ALTER TABLE "transactions" ADD FOREIGN KEY ("from_user") REFERENCES "user_watches" ("id");
 
-ALTER TABLE "entries" ADD FOREIGN KEY ("account_id") REFERENCES "accounts" ("id");
+ALTER TABLE "transactions" ADD FOREIGN KEY ("to_user") REFERENCES "user_watches" ("id");
 
-ALTER TABLE "transfers" ADD FOREIGN KEY ("from_account_id") REFERENCES "accounts" ("id");
+CREATE INDEX ON "user_watches" ("user_id");
 
-ALTER TABLE "transfers" ADD FOREIGN KEY ("to_account_id") REFERENCES "accounts" ("id");
+CREATE INDEX ON "transactions" ("from_user");
 
-CREATE INDEX ON "accounts" ("owner");
+CREATE INDEX ON "transactions" ("to_user");
 
-CREATE INDEX ON "entries" ("account_id");
-
-CREATE INDEX ON "transfers" ("from_account_id");
-
-CREATE INDEX ON "transfers" ("to_account_id");
-
-CREATE INDEX ON "transfers" ("from_account_id", "to_account_id");
-
-COMMENT ON COLUMN "entries"."amount" IS 'can be negative or positive';
+CREATE INDEX ON "transactions" ("from_user", "to_user");
 
 COMMENT ON COLUMN "transfers"."amount" IS 'must be positive';

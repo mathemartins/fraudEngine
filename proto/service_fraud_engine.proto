@@ -21,14 +21,14 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 
 service FraudEngine {
-    rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {
+    rpc CreateUserWatch (CreateUserWatchRequest) returns (CreateUserWatchResponse) {
         option (google.api.http) = {
-            post: "/v1/create_user"
+            post: "/v1/create-user-watch"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            description: "Use this API to create a new user";
-            summary: "Create new user";
+            description: "Use this API to create a new user watch";
+            summary: "Create new user watch";
         };
     }
 }

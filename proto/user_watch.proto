@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/mathemartins/fraudEngine/pb";
+
+message UserWatch {
+    string user_id = 1;
+    string watch_reason = 2;
+    google.protobuf.Timestamp created_at = 3;
+}

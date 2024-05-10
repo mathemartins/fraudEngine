@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package pb;
+
+import "user.proto";
+
+option go_package = "github.com/mathemartins/fraudEngine/pb";
+
+message CreateUserWatchRequest {
+    string user_id = 1;
+    string watch_reason = 2;
+}
+
+message CreateUserWatchResponse {
+    UserWatch userWatch = 1;
+}

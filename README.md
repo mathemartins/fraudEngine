@@ -1,8 +1,8 @@
-# Simple Bank
+# Karrabo Fraud Engine
 
-This repository contains the codes of the [Backend Master Class](https://bit.ly/backendmaster) course by [TECH SCHOOL](https://bit.ly/m/techschool).
+This repository contains the codes of the [Karrabo Fraud Engine](https://bit.ly/backendmaster) written by [Mathemartins](https://bit.ly/m/techschool).
 
-![Backend master class](backend-master.png)
+![Karrabo](karrabo-fraud-engine.png)
 
 You can also find it on Udemy at [this link](https://bit.ly/backendudemy).
 

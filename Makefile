@@ -69,7 +69,17 @@ proto2:
 evans:
 	evans --host localhost --port 9090 -r repl
 
+evans2:
+	docker run --rm -v "$(pwd):/fraud_engine2:ro" \
+		ghcr.io/ktr0731/evans:latest \
+			--path . \
+			--proto . \
+			--host 0.0.0.0 \
+			--port 9090 \
+			repl
+
+
 redis:
 	docker run --name redis -p 6379:6379 -d redis:7-alpine
 
-.PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration db_docs db_schema sqlc test server mock proto proto2 evans redis
+.PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration db_docs db_schema sqlc test server mock proto proto2 evans evans2 redis

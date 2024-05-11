@@ -6,12 +6,10 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func convertUser(user db.User) *pb.User {
-	return &pb.User{
-		Username:          user.Username,
-		FullName:          user.FullName,
-		Email:             user.Email,
-		PasswordChangedAt: timestamppb.New(user.PasswordChangedAt),
-		CreatedAt:         timestamppb.New(user.CreatedAt),
+func convertUserWatch(userWatch db.UserWatch) *pb.UserWatch {
+	return &pb.UserWatch{
+		UserId:      userWatch.UserID.String(),
+		WatchReason: userWatch.WatchReason,
+		CreatedAt:   timestamppb.New(userWatch.CreatedAt.Time),
 	}
 }

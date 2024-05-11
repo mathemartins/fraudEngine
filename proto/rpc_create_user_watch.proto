@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pb;
 
-import "user.proto";
+import "user_watch.proto";
 
 option go_package = "github.com/mathemartins/fraudEngine/pb";
 

@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	FraudEngine_CreateUser_FullMethodName = "/pb.FraudEngine/CreateUser"
+	FraudEngine_CreateUserWatch_FullMethodName = "/pb.FraudEngine/CreateUserWatch"
 )
 
 // FraudEngineClient is the client API for FraudEngine service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type FraudEngineClient interface {
-	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
+	CreateUserWatch(ctx context.Context, in *CreateUserWatchRequest, opts ...grpc.CallOption) (*CreateUserWatchResponse, error)
 }
 
 type fraudEngineClient struct {
@@ -37,9 +37,9 @@ func NewFraudEngineClient(cc grpc.ClientConnInterface) FraudEngineClient {
 	return &fraudEngineClient{cc}
 }
 
-func (c *fraudEngineClient) CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error) {
-	out := new(CreateUserResponse)
-	err := c.cc.Invoke(ctx, FraudEngine_CreateUser_FullMethodName, in, out, opts...)
+func (c *fraudEngineClient) CreateUserWatch(ctx context.Context, in *CreateUserWatchRequest, opts ...grpc.CallOption) (*CreateUserWatchResponse, error) {
+	out := new(CreateUserWatchResponse)
+	err := c.cc.Invoke(ctx, FraudEngine_CreateUserWatch_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *fraudEngineClient) CreateUser(ctx context.Context, in *CreateUserReques
 // All implementations must embed UnimplementedFraudEngineServer
 // for forward compatibility
 type FraudEngineServer interface {
-	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
+	CreateUserWatch(context.Context, *CreateUserWatchRequest) (*CreateUserWatchResponse, error)
 	mustEmbedUnimplementedFraudEngineServer()
 }
 
@@ -58,8 +58,8 @@ type FraudEngineServer interface {
 type UnimplementedFraudEngineServer struct {
 }
 
-func (UnimplementedFraudEngineServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateUser not implemented")
+func (UnimplementedFraudEngineServer) CreateUserWatch(context.Context, *CreateUserWatchRequest) (*CreateUserWatchResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateUserWatch not implemented")
 }
 func (UnimplementedFraudEngineServer) mustEmbedUnimplementedFraudEngineServer() {}
 
@@ -74,20 +74,20 @@ func RegisterFraudEngineServer(s grpc.ServiceRegistrar, srv FraudEngineServer) {
 	s.RegisterService(&FraudEngine_ServiceDesc, srv)
 }
 
-func _FraudEngine_CreateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateUserRequest)
+func _FraudEngine_CreateUserWatch_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUserWatchRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FraudEngineServer).CreateUser(ctx, in)
+		return srv.(FraudEngineServer).CreateUserWatch(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: FraudEngine_CreateUser_FullMethodName,
+		FullMethod: FraudEngine_CreateUserWatch_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FraudEngineServer).CreateUser(ctx, req.(*CreateUserRequest))
+		return srv.(FraudEngineServer).CreateUserWatch(ctx, req.(*CreateUserWatchRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -100,8 +100,8 @@ var FraudEngine_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*FraudEngineServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateUser",
-			Handler:    _FraudEngine_CreateUser_Handler,
+			MethodName: "CreateUserWatch",
+			Handler:    _FraudEngine_CreateUserWatch_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
